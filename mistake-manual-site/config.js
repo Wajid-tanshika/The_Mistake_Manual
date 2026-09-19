@@ -2,7 +2,7 @@
 const PAYMENT_CHECKOUT_URL = "https://rzp.io/rzp/IWHJaFkK";
 const EBOOK_DOWNLOAD_URL   = "ebook/The-Mistake-Manual.pdf";
 const SUPPORT_EMAIL        = "gwajji2212@gmail.com";
-const BOOK_PRICE           = "₹ 1";
+const BOOK_PRICE           = "₹ 99";
 const BOOK_ORIGINAL_PRICE  = "₹ 499";
 const BOOK_TITLE           = "The Mistake Manual";
 const BOOK_SUBTITLE        = "जिंदगी में क्या न करें और क्या करें";
