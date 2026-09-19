@@ -1,6 +1,6 @@
 /* SITE CONFIG: sirf yahin values badalni hain. Yahan koi secret key kabhi na daalein. */
 const PAYMENT_CHECKOUT_URL = "https://rzp.io/rzp/IWHJaFkK";
-const EBOOK_DOWNLOAD_URL   = "https://themistakemanual.netlify.app/thank-you/";
+const EBOOK_DOWNLOAD_URL   = "ebook/The-Mistake-Manual.pdf";
 const SUPPORT_EMAIL        = "gwajji2212@gmail.com";
 const BOOK_PRICE           = "₹ 1";
 const BOOK_ORIGINAL_PRICE  = "₹ 499";
