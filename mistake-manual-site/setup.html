@@ -1,0 +1,41 @@
+<!DOCTYPE html><html lang="hi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Site Setup</title><link rel="stylesheet" href="styles.css"></head><body><div class="setup"><h2>Setup: Payment link, PDF link aur Price</h2>
+<p class="mut">Yahan values bharein. Neeche ek ready <b>config.js</b> ban jayega. Use copy karke apni site ki <code>config.js</code> file me paste karein aur site dobara upload karein. (Sirf is page me values bharne se live site apne aap nahi badalti.)</p>
+<label>Payment checkout URL<input id="f_pay" inputmode="url" placeholder="https://..."></label>
+<label>eBook PDF: file ka path ya link<input id="f_dl" placeholder="ebook/mistake-manual-15c4903e00.pdf"></label><p class="mut" style="margin:-8px 0 8px">Khali chhodein to default path use hoga. PDF ko site ke <code>ebook/</code> folder me isi naam se rakhein, ya full https link daalein.</p>
+<label>Support email<input id="f_mail" type="email" placeholder="you@example.com"></label>
+<label>Price<input id="f_price" placeholder="199 ya ₹199"></label>
+<label>Purani price (optional, discount dikhane ke liye)<input id="f_old" placeholder="499"></label>
+<p id="warn" role="status" style="color:#c81e3a;font-size:14px;margin:8px 0"></p>
+<h3>Generated config.js</h3>
+<textarea id="out" readonly rows="12" aria-label="Generated config.js"></textarea>
+<p><button type="button" id="b_copy" class="btn">Copy config.js</button> <span id="cmsg" class="mut"></span></p></div><script>(function(){
+var TAIL="/* ---- Neeche ka code badalne ki zarurat nahi ---- */\nvar SITE_ROOT = (document.currentScript && document.currentScript.src) ? document.currentScript.src.replace(/config\\.js.*$/, \"\") : \"\";\ndocument.addEventListener(\"DOMContentLoaded\", function () {\n  var unset = function (v) { return v.indexOf(\"_HERE\") > -1; };\n  var all = function (s) { return document.querySelectorAll(s); };\n  var isAbs = /^https?:\\/\\//i.test(EBOOK_DOWNLOAD_URL);\n  var dl = unset(EBOOK_DOWNLOAD_URL) ? \"#\" : (isAbs ? EBOOK_DOWNLOAD_URL : SITE_ROOT + EBOOK_DOWNLOAD_URL);\n\n  all(\"[data-buy]\").forEach(function (a) {\n    a.href = PAYMENT_CHECKOUT_URL;\n    a.addEventListener(\"click\", function (e) {\n      if (unset(PAYMENT_CHECKOUT_URL)) {\n        e.preventDefault();\n        alert(\"Payment link abhi set nahi hai. config.js me PAYMENT_CHECKOUT_URL badlein.\");\n      }\n    });\n  });\n\n  all(\"[data-download]\").forEach(function (a) {\n    a.href = dl;\n    if (!isAbs) a.setAttribute(\"download\", \"The-Mistake-Manual.pdf\");\n    a.addEventListener(\"click\", function (e) {\n      if (unset(EBOOK_DOWNLOAD_URL)) { e.preventDefault(); alert(\"Download link abhi set nahi hai. config.js me EBOOK_DOWNLOAD_URL badlein.\"); }\n    });\n  });\n\n  // Site ke andar wali PDF milti hai ya nahi, check karo (local file:// aur preview me skip)\n  if (SITE_ROOT && !isAbs && !unset(EBOOK_DOWNLOAD_URL) && location.protocol !== \"file:\" && all(\"[data-download]\").length) {\n    var warn = function () { var w = document.getElementById(\"dlwarn\"); if (w) w.hidden = false; };\n    fetch(dl, { method: \"HEAD\" }).then(function (r) { if (!r.ok) warn(); }).catch(warn);\n  }\n\n  all(\"[data-support]\").forEach(function (a) { a.href = \"mailto:\" + SUPPORT_EMAIL; a.textContent = SUPPORT_EMAIL; });\n  all(\"[data-price]\").forEach(function (n) { n.textContent = BOOK_PRICE; });\n  all(\"[data-oldprice]\").forEach(function (n) { if (BOOK_ORIGINAL_PRICE) { n.textContent = BOOK_ORIGINAL_PRICE; n.hidden = false; } });\n  all(\"[data-title]\").forEach(function (n) { n.textContent = BOOK_TITLE; });\n  all(\"[data-subtitle]\").forEach(function (n) { n.textContent = BOOK_SUBTITLE; });\n  all(\"[data-author]\").forEach(function (n) { n.textContent = AUTHOR_NAME; });\n});\n", K="mm_setup_v1", $=function(i){return document.getElementById(i)};
+var ids=["f_pay","f_dl","f_mail","f_price","f_old"];
+function money(v){v=v.trim();return /^[\d,]+$/.test(v)?"\u20b9"+v:v}
+function vals(){return {pay:$("f_pay").value.trim(),dl:$("f_dl").value.trim(),mail:$("f_mail").value.trim(),price:money($("f_price").value),old:money($("f_old").value)}}
+function q(s){return JSON.stringify(s)}
+function gen(){var v=vals(),w=[];
+ if(v.pay&&!/^https?:\/\//i.test(v.pay))w.push("Payment URL https:// se shuru hona chahiye.");
+ if(v.dl&&!/^https?:\/\//i.test(v.dl)&&!/\.pdf$/i.test(v.dl))w.push("PDF ka naam .pdf par khatam hona chahiye.");
+ if(v.mail&&!/^\S+@\S+\.\S+$/.test(v.mail))w.push("Email sahi nahi lag raha.");
+ $("warn").textContent=w.join(" ");
+ var t="/* SITE CONFIG: sirf yahin values badalni hain. Yahan koi secret key kabhi na daalein. */\n"+
+ "const PAYMENT_CHECKOUT_URL = "+q(v.pay||"PAYMENT_CHECKOUT_URL_HERE")+";\n"+
+ "const EBOOK_DOWNLOAD_URL   = "+q(v.dl||"ebook/mistake-manual-15c4903e00.pdf")+";\n"+
+ "const SUPPORT_EMAIL        = "+q(v.mail||"SUPPORT_EMAIL_HERE")+";\n"+
+ "const BOOK_PRICE           = "+q(v.price||"\u20b9PRICE_HERE")+";\n"+
+ "const BOOK_ORIGINAL_PRICE  = "+q(v.old)+";\n"+
+ "const BOOK_TITLE           = \"The Mistake Manual\";\n"+
+ "const BOOK_SUBTITLE        = \"\u091c\u093f\u0902\u0926\u0917\u0940 \u092e\u0947\u0902 \u0915\u094d\u092f\u093e \u0928 \u0915\u0930\u0947\u0902 \u0914\u0930 \u0915\u094d\u092f\u093e \u0915\u0930\u0947\u0902\";\n"+
+ "const AUTHOR_NAME          = \"Mohd Wajid\";\n\n"+TAIL;
+ $("out").value=t;
+ try{localStorage.setItem(K,JSON.stringify(v))}catch(e){}
+ if(window.onCfg)window.onCfg(v);
+}
+try{var s=JSON.parse(localStorage.getItem(K)||"null");if(s){$("f_pay").value=s.pay||"";$("f_dl").value=s.dl||"";$("f_mail").value=s.mail||"";$("f_price").value=s.price||"";$("f_old").value=s.old||""}}catch(e){}
+ids.forEach(function(i){$(i).addEventListener("input",gen)});
+$("b_copy").addEventListener("click",function(){var o=$("out");o.focus();o.select();var ok=false;
+ try{ok=document.execCommand("copy")}catch(e){}
+ $("cmsg").textContent=ok?"Copy ho gaya.":"Text select ho gaya hai: Ctrl+C / long-press se copy karein."});
+gen();
+})();</script></body></html>
