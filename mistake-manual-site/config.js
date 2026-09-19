@@ -1,13 +1,9 @@
-/* ==========================================================
-   SITE CONFIG: sirf yahin values badalni hain.
-   Yahan koi secret key / API secret KABHI na daalein.
-   ========================================================== */
-const PAYMENT_CHECKOUT_URL = "PAYMENT_CHECKOUT_URL_HERE"; // apne payment gateway ka checkout link
-// eBook PDF: site ke andar wali PDF ka path ("ebook/<file>.pdf") ya koi full https link.
-const EBOOK_DOWNLOAD_URL   = "ebook/mistake-manual-15c4903e00.pdf";
-const SUPPORT_EMAIL        = "SUPPORT_EMAIL_HERE";        // apna support email
-const BOOK_PRICE           = "₹PRICE_HERE";               // e.g. "₹199"
-const BOOK_ORIGINAL_PRICE  = "";                          // discount dikhana ho to purani price (e.g. "₹499"), warna khali
+/* SITE CONFIG: sirf yahin values badalni hain. Yahan koi secret key kabhi na daalein. */
+const PAYMENT_CHECKOUT_URL = "https://rzp.io/rzp/IWHJaFkK";
+const EBOOK_DOWNLOAD_URL   = "";
+const SUPPORT_EMAIL        = "gwajji2212@gmail.com";
+const BOOK_PRICE           = "₹ 99";
+const BOOK_ORIGINAL_PRICE  = "₹499";
 const BOOK_TITLE           = "The Mistake Manual";
 const BOOK_SUBTITLE        = "जिंदगी में क्या न करें और क्या करें";
 const AUTHOR_NAME          = "Mohd Wajid";
